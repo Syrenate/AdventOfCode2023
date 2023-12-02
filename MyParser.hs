@@ -105,3 +105,33 @@ string []     = return []
 string (x:xs) = do char x
                    string xs
                    return (x:xs)
+
+
+parseInput2 :: Parser [[(Int,Char)]]
+parseInput2 = do some temp2
+
+temp2 :: Parser [(Int,Char)]
+temp2 = do xs <- some temp
+           char ';'
+           return xs
+           <|>
+           some temp
+
+temp :: Parser (Int,Char)
+temp = do d <- nat
+          c <- item
+          return (d,c)
+            
+
+
+
+
+
+
+
+
+wordsWhen     :: (Char -> Bool) -> String -> [String]
+wordsWhen p s =  case dropWhile p s of
+                        "" -> []
+                        s' -> w : wordsWhen p s''
+                           where (w, s'') = break p s'
