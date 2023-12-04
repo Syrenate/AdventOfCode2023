@@ -109,21 +109,38 @@ string (x:xs) = do char x
 
 parseInput2 :: Parser [[(Int,Char)]]
 parseInput2 = do some temp2
+   where
+      temp2 :: Parser [(Int,Char)]
+      temp2 = do xs <- some temp
+                 char ';'
+                 return xs
+                 <|>
+                 some temp
 
-temp2 :: Parser [(Int,Char)]
-temp2 = do xs <- some temp
-           char ';'
-           return xs
-           <|>
-           some temp
-
-temp :: Parser (Int,Char)
-temp = do d <- nat
-          c <- item
-          return (d,c)
+      temp :: Parser (Int,Char)
+      temp = do d <- nat
+                c <- item
+                return (d,c)
             
 
 
+--Day 4
+parseInput4 :: Parser (Int,[Int],[Int])
+parseInput4 = do string "Card"
+                 some (char ' ')
+                 x <- nat
+                 char ':'
+                 xs <- some temp
+                 string " | "
+                 ys <- some temp
+                 return (x,xs,ys)
+                 
+temp :: Parser Int
+temp = do some (char ' ')
+          x <- nat
+          return x
+          <|>
+          nat
 
 
 
