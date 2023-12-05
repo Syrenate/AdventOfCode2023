@@ -121,7 +121,7 @@ parseInput2 = do some temp2
       temp = do d <- nat
                 c <- item
                 return (d,c)
-            
+
 
 
 --Day 4
@@ -134,14 +134,32 @@ parseInput4 = do string "Card"
                  string " | "
                  ys <- some temp
                  return (x,xs,ys)
-                 
+
 temp :: Parser Int
 temp = do some (char ' ')
-          x <- nat
-          return x
+          nat
           <|>
           nat
 
+
+--Day 5
+parseInput5 :: Parser [String]
+parseInput5 = do sepEmpLines
+      
+sepEmpLines :: Parser [String]
+sepEmpLines = do some temp
+   where
+      temp = do xs <- some (satisfy (/='\n'))
+                string "\n\n"
+                return xs
+                <|>
+                temp2
+
+      temp2 = do xs <- some (satisfy (/='\n'))
+                 string "\n"
+                 return xs
+                 <|>
+                 some (satisfy (/='\n')) 
 
 
 
