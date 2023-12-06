@@ -8,6 +8,7 @@ evalMargin (t,x) = sum [if x < (t-t')*t' then 1 else 0 | t' <- [1..t]]
 part1 :: [(Integer,Integer)] -> Integer
 part1 xs = product [evalMargin x | x <- xs]
 
+
 getLowerBound :: (Integer,Integer) -> Integer
 getLowerBound (t,x) = go 10000 0
     where
