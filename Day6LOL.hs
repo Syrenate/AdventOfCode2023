@@ -1,0 +1,3 @@
+getInput = do inp <- readFile "Day6Input.txt"; return (zip (map read (take 4 (drop 1 (words inp)))) (map read (drop 6 (words inp))))
+getRange (t,x) = floor (((fromInteger t + sqrt (fromInteger t ^ 2 - 4 * fromInteger x)) / 2) - 0.0001) - ceiling (((fromInteger t - sqrt (fromInteger t ^ 2 - 4 * fromInteger x)) / 2) + 0.0001) + 1
+main = do inp <- getInput; print (product [getRange x | x <- inp]); print (getRange (read (concat [show x | (x,y) <- inp]), read (concat [show y | (x,y) <- inp])))
